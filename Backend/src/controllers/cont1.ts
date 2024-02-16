@@ -43,6 +43,9 @@ export const compileFileHandler: RequestHandler = async (req, res) => {
 export const prettierHandler: RequestHandler = async (req, res) => {
   try {
     const { code, language } = req.body
+    if (!fs.existsSync('temp')) {
+      fs.mkdirSync('temp')
+    }
     const uuid = v4()
     const extension = Languages[language]
     const fileName = `${uuid}.${extension}`
