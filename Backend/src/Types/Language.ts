@@ -1,0 +1,28 @@
+export const Languages: {
+  [key: string]: string
+} = {
+  javascript: 'js',
+  python: 'py',
+  golang: 'go',
+  java: 'java',
+  c: 'c',
+  cpp: 'cpp',
+  csharp: 'cs',
+  ruby: 'rb',
+  swift: 'swift',
+  php: 'php',
+  typescript: 'ts',
+  kotlin: 'kt',
+  rust: 'rs',
+  scala: 'scala',
+  r: 'r',
+  perl: 'pl',
+  haskell: 'hs',
+  lua: 'lua',
+  elixir: 'ex',
+  clojure: 'clj',
+  dart: 'dart',
+  julia: 'jl',
+  shell: 'sh',
+  powershell: 'ps1',
+}

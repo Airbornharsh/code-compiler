@@ -4,7 +4,7 @@
   "description": "This is the backend for the Code Compiler",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon",
     "build": "tsc -b",
     "start": "node dist/index.js"
   },

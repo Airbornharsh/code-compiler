@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.send('Hello World')
 })
 
-app.get('/api', router)
+app.use('/api', router)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
