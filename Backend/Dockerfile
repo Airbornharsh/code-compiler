@@ -22,7 +22,10 @@ RUN apk add --no-cache \
   g++ \
   ruby \
   lua5.3 \
-  perl
+  perl \
+  go \
+  rust \
+  cargo
 
 # Expose the port for the server
 EXPOSE 4000
