@@ -25,4 +25,5 @@ export const Languages: {
   julia: 'jl',
   shell: 'sh',
   powershell: 'ps1',
+  go: 'go',
 }

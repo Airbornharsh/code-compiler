@@ -3,47 +3,47 @@ import { exec } from 'child_process'
 export const getCommand = (language: string, fileName: string) => {
   switch (language) {
     case 'javascript':
-      return `node temp/${fileName}`
+      return `node ${fileName}`
     case 'typescript':
-      return `ts-node temp/${fileName}`
+      return `ts-node ${fileName}`
     case 'python':
-      return `python3 temp/${fileName}`
+      return `python3 ${fileName}`
     case 'java':
-      return `java -cp temp ${fileName}`
+      return `javac ${fileName} && java ${fileName.split('.')[0]} && rm ${fileName.split('.')[0]}.class`
     case 'c':
-      return `gcc temp/${fileName} -o temp/${fileName}.out && temp/${fileName}.out`
+      return `gcc ${fileName} -o ${fileName}.out && ${fileName}.out && rm ${fileName}.out`
     case 'cpp':
-      return `g++ temp/${fileName} -o temp/${fileName}.out && temp/${fileName}.out`
+      return `g++ ${fileName} -o ${fileName}.out && ${fileName}.out && rm ${fileName}.out`
     case 'csharp':
-      return `mcs temp/${fileName} && mono temp/${fileName}.exe`
+      return `mcs ${fileName} && mono ${fileName}.exe && rm ${fileName}.exe`
     case 'ruby':
-      return `ruby temp/${fileName}`
+      return `ruby ${fileName}`
     case 'swift':
-      return `swift temp/${fileName}`
+      return `swift ${fileName}`
     case 'php':
-      return `php temp/${fileName}`
+      return `php ${fileName}`
     case 'kotlin':
-      return `kotlinc temp/${fileName} -include-runtime -d temp/${fileName}.jar && java -jar temp/${fileName}.jar`
+      return `kotlinc ${fileName} -include-runtime -d ${fileName}.jar && java -jar ${fileName}.jar && rm ${fileName}.jar`
     case 'rust':
-      return `rustc temp/${fileName} -o temp/${fileName}.out && temp/${fileName}.out`
+      return `rustc ${fileName} -o ${fileName}.out && ${fileName}.out && rm ${fileName}.out`
     case 'scala':
-      return `scalac temp/${fileName} && scala temp/${fileName}`
+      return `scalac ${fileName} && scala ${fileName}`
     case 'perl':
-      return `perl temp/${fileName}`
+      return `perl ${fileName}`
     case 'r':
-      return `Rscript temp/${fileName}`
+      return `Rscript ${fileName}`
     case 'haskell':
-      return `runhaskell temp/${fileName}`
+      return `runhaskell ${fileName}`
     case 'lua':
-      return `lua temp/${fileName}`
+      return `lua ${fileName}`
     case 'elixir':
-      return `elixir temp/${fileName}`
+      return `elixir ${fileName}`
     case 'clojure':
-      return `clojure temp/${fileName}`
+      return `clojure ${fileName}`
     case 'dart':
-      return `dart temp/${fileName}`
+      return `dart ${fileName}`
     case 'go':
-      return `go run temp/${fileName}`
+      return `go run ${fileName}`
     default:
       return 'echo "Language not supported"'
   }
