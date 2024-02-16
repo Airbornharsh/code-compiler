@@ -1,5 +1,9 @@
 import { Router } from 'express'
-import { compileFileHandler, compileHandler } from './controllers/cont1'
+import {
+  compileFileHandler,
+  compileHandler,
+  prettierHandler,
+} from './controllers/cont1'
 import multer from 'multer'
 import { upload } from './utils/upload'
 
@@ -10,5 +14,6 @@ router.get('/', (req, res) => {
 })
 router.post('/compile', compileHandler)
 router.post('/compile-file', upload.single('file'), compileFileHandler)
+router.post('/prettier', prettierHandler)
 
 export default router
