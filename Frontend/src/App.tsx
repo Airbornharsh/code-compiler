@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Compiler, Languages } from './Utils/code'
+import { FaPlay } from 'react-icons/fa'
 const compiler = new Compiler()
 
 const App = () => {
@@ -9,10 +10,20 @@ const App = () => {
 
   const compileCode = async () => {
     try {
-      console.log(language)
+      console.log(code)
       const data = await compiler.compileCode(code, language)
 
       setOutput(data.result)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const codePrettify = async () => {
+    try {
+      const data = await compiler.prettier(code, language)
+
+      setCode(data.formattedCode)
     } catch (e) {
       console.log(e)
     }
@@ -23,14 +34,22 @@ const App = () => {
         <div className="h-10 flex justify-between items-center text-sm px-2">
           <h2>Code Editor</h2>
           <div className="flex items-center justify-center gap-2">
-            <p
+            <FaPlay
               className="cursor-pointer"
               onClick={() => {
                 compileCode()
               }}
-            >
-              run
-            </p>
+            />
+            {language === Languages.JAVASCRIPT ? (
+              <p
+                className="mx-1 px-1 font-medium"
+                onClick={() => {
+                  codePrettify()
+                }}
+              >
+                Prettify
+              </p>
+            ) : null}
             <select
               className="bg-black text-white p-2 rounded-md outline-none"
               value={language}
@@ -52,7 +71,7 @@ const App = () => {
             placeholder="Enter your code here..."
             value={code}
             onChange={(e) => setCode(e.target.value)}
-          ></textarea>
+          />
           <p className="w-full h-[30%] bg-slate-900 text-white p-3 text-sm rounded-md outline-none">
             {output}
           </p>

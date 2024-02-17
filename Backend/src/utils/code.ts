@@ -7,7 +7,12 @@ export const compileCode = async (code: string, language: string) => {
   try {
     const uuid = v4()
     const extension = Languages[language]
-    const fileName = `${uuid}.${extension}`
+    let fileName
+    if (language === 'java') {
+      fileName = `${code?.split('public class ')[1].split(' ')[0]}.${extension}`
+    } else {
+      fileName = `${uuid}.${extension}`
+    }
     const filePath = `temp/${fileName}`
 
     fs.writeFileSync(filePath, code)

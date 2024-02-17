@@ -11,9 +11,9 @@ export const getCommand = (language: string, fileName: string) => {
     case 'java':
       return `javac ${fileName} && java ${fileName.split('.')[0]} && rm ${fileName.split('.')[0]}.class`
     case 'c':
-      return `gcc ${fileName} -o ${fileName}.out && ${fileName}.out && rm ${fileName}.out`
+      return `gcc ${fileName} -o ${fileName}.out && ./${fileName}.out && rm ./${fileName}.out`
     case 'cpp':
-      return `g++ ${fileName} -o ${fileName}.out && ${fileName}.out && rm ${fileName}.out`
+      return `g++ ${fileName} -o ${fileName}out && ./${fileName}out && rm ./${fileName}out`
     case 'csharp':
       return `mcs ${fileName} && mono ${fileName}.exe && rm ${fileName}.exe`
     case 'ruby':
@@ -25,7 +25,7 @@ export const getCommand = (language: string, fileName: string) => {
     case 'kotlin':
       return `kotlinc ${fileName} -include-runtime -d ${fileName}.jar && java -jar ${fileName}.jar && rm ${fileName}.jar`
     case 'rust':
-      return `rustc ${fileName} -o ${fileName}.out && ${fileName}.out && rm ${fileName}.out`
+      return `rustc ${fileName} && ./${fileName} && rm ${fileName}`
     case 'scala':
       return `scalac ${fileName} && scala ${fileName}`
     case 'perl':

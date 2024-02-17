@@ -2,10 +2,10 @@ import { RequestHandler } from 'express'
 import { compileCode, getLanguage } from '../utils/code'
 import fs from 'fs'
 import { runCommand } from '../utils/execution'
-import prettier from 'prettier'
 import { v4 } from 'uuid'
 import { Languages } from '../Types/Language'
-import { execFile } from '../utils/commands'
+import prettier from 'prettier'
+// import { execFile } from '../utils/commands'
 
 export const compileHandler: RequestHandler = async (req, res) => {
   try {
@@ -50,12 +50,18 @@ export const prettierHandler: RequestHandler = async (req, res) => {
     const extension = Languages[language]
     const fileName = `${uuid}.${extension}`
     const filePath = `temp/${fileName}`
-    fs.writeFileSync(filePath, code)
+    // fs.writeFileSync(filePath, code)
 
-    await execFile(`cd temp && prettier --write ${fileName} && cd ..`)
-    const formattedCode = fs.readFileSync(filePath, 'utf-8')
-    fs.unlinkSync(filePath)
-    return res.status(200).json({ formattedCode })
+    // await execFile(`cd temp && prettier --write ${fileName} && cd ..`)
+    const formattedContent = await prettier.format(code, {
+      // Add any Prettier configuration options here
+      // For example, you can specify the parser for a specific language
+      // parser: 'babel',
+      parser: language === 'javascript' ? 'babel' : language,
+    })
+    // const formattedCode = fs.readFileSync(filePath, 'utf-8')
+    // fs.unlinkSync(filePath)
+    return res.status(200).json({ formattedCode: formattedContent })
   } catch (err: any) {
     console.error(err)
     return res.status(500).json({ message: err.message })
