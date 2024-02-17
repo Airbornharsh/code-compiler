@@ -6,7 +6,7 @@ class Compiler {
 
   async compileCode(code: string, language: Languages) {
     try {
-      const data = await fetch(`https://compiler-backend.harshkeshri.com/api/compile`, {
+      const data = await fetch(`http://localhost:4000/api/compile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -16,6 +16,7 @@ class Compiler {
 
       const parsedData: {
         result: string
+        error: string
       } = await data.json()
 
       return parsedData
@@ -40,6 +41,7 @@ class Compiler {
 
       const parsedData: {
         result: string
+        error: string
       } = await data.json()
 
       return parsedData
@@ -50,13 +52,16 @@ class Compiler {
 
   async prettier(code: string, language: Languages) {
     try {
-      const data = await fetch(`https://compiler-backend.harshkeshri.com/api/prettier`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code, language: language.toLowerCase() }),
-      })
+      const data = await fetch(
+        `https://compiler-backend.harshkeshri.com/api/prettier`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ code, language: language.toLowerCase() }),
+        }
+      )
 
       const parsedData: {
         formattedCode: string

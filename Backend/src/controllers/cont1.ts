@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express'
+import e, { RequestHandler } from 'express'
 import { compileCode, getLanguage } from '../utils/code'
 import fs from 'fs'
 import { runCommand } from '../utils/execution'
@@ -13,8 +13,12 @@ export const compileHandler: RequestHandler = async (req, res) => {
     if (!fs.existsSync('temp')) {
       fs.mkdirSync('temp')
     }
-    const result = await compileCode(code, language)
-    return res.status(200).json({ result })
+    const { result, error } = (await compileCode(code, language))!
+    if (error) {
+      return res.status(200).json({ error, result: '' })
+    } else {
+      return res.status(200).json({ error: '', result })
+    }
   } catch (err: any) {
     console.error(err)
     return res.status(500).json({ message: err.message })
@@ -30,10 +34,14 @@ export const compileFileHandler: RequestHandler = async (req, res) => {
 
     fs.writeFileSync(path, code)
 
-    const result = await runCommand(language, filename)
+    const { result, error } = await runCommand(language, filename)
 
     fs.unlinkSync(path)
-    return res.status(200).json({ result })
+    if (error) {
+      return res.status(200).json({ error, result: '' })
+    } else {
+      return res.status(200).json({ error: '', result })
+    }
   } catch (err: any) {
     console.error(err)
     return res.status(500).json({ message: err.message })

@@ -17,11 +17,11 @@ export const compileCode = async (code: string, language: string) => {
 
     fs.writeFileSync(filePath, code)
 
-    const result = await runCommand(language, fileName)
+    const { result, error } = await runCommand(language, fileName)
 
     fs.unlinkSync(filePath)
 
-    return result
+    return { result, error }
   } catch (err) {
     console.error(err)
   }
