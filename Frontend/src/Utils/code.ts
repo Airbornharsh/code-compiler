@@ -6,7 +6,7 @@ class Compiler {
 
   async compileCode(code: string, language: Languages) {
     try {
-      const data = await fetch(`http://localhost:4000/api/compile`, {
+      const data = await fetch(`https://compiler-backend.harshkeshri.com/api/compile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
