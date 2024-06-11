@@ -16,7 +16,8 @@ export enum Languages {
   // R = "r",
   // PERL = "perl",
   // HASKELL = "haskell",
-  // LUA = "lua",
+  // LUA = "lua",cealr
+  
   // ELIXIR = "elixir",
   // CLOJURE = "clojure",
   // DART = "dart",

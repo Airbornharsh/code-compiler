@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-catch */
+import { COMPILER_BACKEND_URI } from './config'
 import { Languages } from './languages'
 
 class Compiler {
@@ -6,7 +7,7 @@ class Compiler {
 
   async compileCode(code: string, language: Languages) {
     try {
-      const data = await fetch(`https://compiler-backend.harshkeshri.com/api/compile`, {
+      const data = await fetch(`${COMPILER_BACKEND_URI}/api/compile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,13 +32,10 @@ class Compiler {
       formData.append('file', file)
       formData.append('filename', file.name)
       formData.append('originalname', file.name)
-      const data = await fetch(
-        `https://compiler-backend.harshkeshri.com/api/compile-file`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      )
+      const data = await fetch(`${COMPILER_BACKEND_URI}/api/compile-file`, {
+        method: 'POST',
+        body: formData,
+      })
 
       const parsedData: {
         result: string
@@ -52,16 +50,13 @@ class Compiler {
 
   async prettier(code: string, language: Languages) {
     try {
-      const data = await fetch(
-        `https://compiler-backend.harshkeshri.com/api/prettier`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code, language: language.toLowerCase() }),
-        }
-      )
+      const data = await fetch(`${COMPILER_BACKEND_URI}/api/prettier`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code, language: language.toLowerCase() }),
+      })
 
       const parsedData: {
         formattedCode: string
