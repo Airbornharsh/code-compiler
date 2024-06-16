@@ -1,22 +1,40 @@
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Compiler, Languages } from './Utils/code'
 import { FaPlay } from 'react-icons/fa'
-import CodeEditor from '@uiw/react-textarea-code-editor'
-import {
-  findCharacterDifferences,
-  getShortcut,
-  insertCharacterAtIndex,
-} from './Utils/editor'
+// import CodeEditor from '@uiw/react-textarea-code-editor'
+// import {
+//   findCharacterDifferences,
+//   getShortcut,
+//   insertCharacterAtIndex,
+// } from './Utils/editor'
+import Editor, { useMonaco } from '@monaco-editor/react'
+import { editor } from 'monaco-editor'
 const compiler = new Compiler()
 
 const App = () => {
+  const monaco = useMonaco()
   const [code, setCode] = useState('')
   const [language, setLanguage] = useState(Languages.JAVASCRIPT)
-  const [shortcut, setShortcut] = useState('js')
+  // const [shortcut, setShortcut] = useState('js')
   const [output, setOutput] = useState('Output will be shown here')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const inputRef = useRef<HTMLTextAreaElement | null>(null)
+  // const inputRef = useRef<HTMLTextAreaElement | null>(null)
+
+  useEffect(() => {
+    if (monaco) {
+      import('monaco-themes/themes/GitHub Dark.json').then((data) => {
+        const monokaiTheme = data // Assuming the theme data is exported as default
+        monaco.editor.defineTheme(
+          'm',
+          monokaiTheme as editor.IStandaloneThemeData
+        )
+        monaco.editor.setTheme('m')
+      })
+    }
+
+    // eslint-disable-next-line
+  }, [])
 
   const compileCode = async () => {
     try {
@@ -33,19 +51,19 @@ const App = () => {
     }
   }
 
-  const codePrettify = async () => {
-    try {
-      setError('')
-      setIsLoading(true)
-      const data = await compiler.prettier(code, language)
+  // const codePrettify = async () => {
+  //   try {
+  //     setError('')
+  //     setIsLoading(true)
+  //     const data = await compiler.prettier(code, language)
 
-      setCode(data.formattedCode)
-    } catch (e) {
-      console.log(e)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  //     setCode(data.formattedCode)
+  //   } catch (e) {
+  //     console.log(e)
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   return (
     <div className="w-screen h-screen flex justify-center items-center relative">
@@ -63,7 +81,7 @@ const App = () => {
                 }}
               />
             )}
-            {language === Languages.JAVASCRIPT ? (
+            {/* {language === Languages.JAVASCRIPT ? (
               <p
                 className="mx-1 px-1 font-medium"
                 onClick={() => {
@@ -72,12 +90,12 @@ const App = () => {
               >
                 Prettify
               </p>
-            ) : null}
+            ) : null} */}
             <select
               className="bg-black text-white p-2 rounded-md outline-none"
               value={language}
               onChange={(e) => {
-                setShortcut(getShortcut(e.target.value.toLowerCase()))
+                // setShortcut(getShortcut(e.target.value.toLowerCase()))
                 setLanguage(e.target.value as Languages)
               }}
             >
@@ -109,7 +127,7 @@ const App = () => {
               }
             }}
           /> */}
-          <CodeEditor
+          {/* <CodeEditor
             value={code}
             language={shortcut}
             ref={inputRef}
@@ -171,12 +189,44 @@ const App = () => {
               setCode(e.target.value)
             }}
             padding={15}
-            className="w-full h-[70%] bg-black text-white p-3 text-sm rounded-md outline-none"
+            
             style={{
               fontFamily:
                 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
             }}
+          /> */}
+
+          <Editor
+            height={'70%'}
+            defaultLanguage={'javascript'}
+            width={'100%'}
+            language={language}
+            value={code}
+            onChange={(value) => {
+              setCode(value || '')
+            }}
+            className="w-full text-white p-3 text-sm rounded-md outline-none"
+            options={{
+              minimap: {
+                enabled: false,
+              },
+              wordWrap: 'on',
+              padding: {
+                top: 20,
+              },
+              fontFamily: 'Fira Code',
+              fontSize: 14,
+              lineHeight: 24,
+              scrollbar: {
+                useShadows: true,
+                verticalHasArrows: true,
+                horizontalScrollbarSize: 8,
+                verticalSliderSize: 8,
+                horizontalSliderSize: 8,
+              },
+            }}
           />
+
           {!error ? (
             <p className="w-full h-[30%] bg-slate-900 text-white p-3 text-sm rounded-md outline-none">
               {output}
