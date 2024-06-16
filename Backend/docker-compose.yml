@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  compiler:
+    image: airbornarsh/code_compiler:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 200M
+    ports:
+      - "9999:80"
+    volumes:
+      - ./temp:/app/temp
